@@ -19,12 +19,16 @@ from django.urls import path
 from levelupapi.views import register_user, login_user
 from django.conf.urls import include
 from rest_framework import routers
-from levelupapi.views import GameTypeView
+from levelupapi.views import GameTypeView, EventView, GameView
 
 # DefaultRouter sets up the resource for each method that is present on the view
 # The trailing_slash=False tells the router to accept /gametypes instead of /gametypes/. It’s a very annoying error to come across, when your server is not responding and the code looks right, the only issue is your fetch url is missing a / at the end.
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'gametypes', GameTypeView, 'gametype')
+router.register(r'events', EventView, 'event')
+router.register(r'games', GameView, 'event')
+
+
 
 urlpatterns = [
     path('register', register_user),
