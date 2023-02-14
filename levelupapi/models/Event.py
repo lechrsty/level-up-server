@@ -10,5 +10,4 @@ class Event(models.Model):
     organizer = models.ForeignKey(Gamer, on_delete=models.SET_NULL, null=True)
     date = models.DateField(auto_now=False)
     time = models.TimeField(auto_now=False)
-    joined = models.BooleanField(None)
     
