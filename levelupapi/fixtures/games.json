@@ -1,0 +1,41 @@
+[
+    {
+        "model": "levelupapi.game",
+        "pk": 1,
+        "fields": {
+            "title": "Caves and Chimeras",
+            "description": "Caves and caves and chimeras galore!",
+            "game_type": 1,
+            "creator": 1,
+            "created_on": "2020-08-29",
+            "player_count": 4,
+            "skill_level": "Ages 10 and up"
+        }
+    },
+    {
+        "model": "levelupapi.game",
+        "pk": 2,
+        "fields": {
+            "title": "MapleStory",
+            "description": "Long live the FM",
+            "game_type": 3,
+            "creator": 1,
+            "created_on": "2020-08-29",
+            "player_count": 1,
+            "skill_level": "Ages 14 and up"
+        }
+    },
+    {
+        "model": "levelupapi.game",
+        "pk": 3,
+        "fields": {
+            "title": "Dungeons and Dragons",
+            "description": "Players form an adventuring party who explore fantasy worlds together as they embark on epic quests and level up in experience.",
+            "game_type": 3,
+            "creator": 1,
+            "created_on": "2020-08-29",
+            "player_count": 4,
+            "skill_level": "For the patient and determined"
+        }
+    }
+]
