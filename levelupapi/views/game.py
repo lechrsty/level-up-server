@@ -40,12 +40,12 @@ class GameView(ViewSet):
         game_type = GameType.objects.get(pk=request.data["game_type"])
 
         game = Game.objects.create(
-            title=request.data["title"],
-            description=request.data["description"],
-            player_count=request.data["player_count"],
-            skill_level=request.data["skill_level"],
-            creator=gamer,
-            game_type=game_type
+            gamer=gamer,
+            name=request.data["name"],
+            game_type=game_type,
+            maker=request.data["maker"],
+            num_of_players=request.data["num_of_players"],
+            skill_level=request.data["skill_level"]
         )
         serializer = GameSerializer(game)
         return Response(serializer.data)
