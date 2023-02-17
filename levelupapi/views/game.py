@@ -7,25 +7,16 @@ from levelupapi.models import Game, Gamer, GameType
 
 
 class GameView(ViewSet):
-    """Level up game types view"""
 
     def retrieve(self, request, pk):
-        """Handle GET requests for single game type
 
-        Returns:
-            Response -- JSON serialized game type
-        """
         game = Game.objects.get(pk=pk)
         serializer = GameSerializer(game)
         return Response(serializer.data)
 
 
     def list(self, request):
-        """Handle GET requests to get all game types
 
-        Returns:
-            Response -- JSON serialized list of game types
-        """
         games = Game.objects.all()
         serializer = GameSerializer(games, many=True)
         return Response(serializer.data)
@@ -49,13 +40,42 @@ class GameView(ViewSet):
         )
         serializer = GameSerializer(game)
         return Response(serializer.data)
+
+    def update(self, request, pk):
+            """Handle PUT requests for a game
+
+            Returns:
+                Response -- Empty body with 204 status code
+            """
+
+            game = Game.objects.get(pk=pk)
+            game.name=request.data["name"]
+            game.maker=request.data["maker"]
+            game.num_of_players=request.data["num_of_players"]
+            game.skill_level=request.data["skill_level"]
+
+            game_type = GameType.objects.get(pk=request.data["game_type"])
+            game.game_type = game_type
+
+            gamer = Gamer.objects.get(user=request.auth.user)
+            game.gamer = gamer
+
+            game.save()
+
+            return Response(None, status=status.HTTP_204_NO_CONTENT)
+
         
+class GameGamerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Gamer
+        fields = ('user', 'bio', 'full_name')
+
 class GameSerializer(serializers.ModelSerializer):
-    """JSON serializer for game types
-    """
-    # The Meta class hold the configuration for the serializer. We’re telling the serializer to use the Game model and to include the id andlabel fields.
+
+    gamer = GameGamerSerializer(many=False)
 
     class Meta:
         model = Game
         fields = ('id', 'gamer', 'name', 'game_type', 'maker', 'num_of_players', 'skill_level')
-        depth = 2
+        depth = 1
