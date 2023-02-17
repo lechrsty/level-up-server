@@ -49,15 +49,17 @@ class GameView(ViewSet):
             """
 
             game = Game.objects.get(pk=pk)
-            gamer=request.data["gamer"],
-            name=request.data["name"],
-            game_type=request.data["game_type"],
-            maker=request.data["maker"],
-            num_of_players=request.data["num_of_players"],
-            skill_level=request.data["skill_level"]
+            game.name=request.data["name"]
+            game.maker=request.data["maker"]
+            game.num_of_players=request.data["num_of_players"]
+            game.skill_level=request.data["skill_level"]
 
             game_type = GameType.objects.get(pk=request.data["game_type"])
             game.game_type = game_type
+
+            gamer = Gamer.objects.get(user=request.auth.user)
+            game.gamer = gamer
+
             game.save()
 
             return Response(None, status=status.HTTP_204_NO_CONTENT)
