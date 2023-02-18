@@ -30,6 +30,7 @@ router.register(r'games', GameView, 'event')
 
 
 
+
 urlpatterns = [
     path('register', register_user),
     # Requests to http://localhost:8000/register will be routed to the register_user function
