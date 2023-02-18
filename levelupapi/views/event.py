@@ -29,6 +29,8 @@ class EventView(ViewSet):
         """
         events = Event.objects.all()
 
+        gamer = Gamer.objects.get(user=request.auth.user)
+
         if "game" in request.query_params:
                 query = request.GET.get('game')
                 query_int = int(query)
@@ -36,6 +38,12 @@ class EventView(ViewSet):
                 events = events.filter(game_id=query_int)
         else:
                 events = Event.objects.all()
+
+            # Set the `joined` property on every event
+        for event in events:
+            # Check to see if the gamer is in the attendees list on the event
+            event.joined = gamer in event.attendees.all()
+
 
         serializer = EventSerializer(events, many=True)
         return Response(serializer.data)
@@ -120,5 +128,5 @@ class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
-        fields = ('id', 'game', 'title', 'description', 'organizer', 'date', 'time')
+        fields = ('id', 'game', 'title', 'description', 'organizer', 'date', 'time', 'attendees', 'joined')
         depth = 1
